@@ -27,5 +27,6 @@
 /config/master.key
 
 .ruby-version
-.Gemfile.lock
+Gemfile.lock
 
+.env

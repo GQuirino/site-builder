@@ -17,6 +17,7 @@ ActiveRecord::Schema.define(version: 2020_08_05_121846) do
 
   create_table "banners", force: :cascade do |t|
     t.string "background_color"
+    t.string "title_color"
     t.bigint "site_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

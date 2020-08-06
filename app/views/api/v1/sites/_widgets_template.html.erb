@@ -1,0 +1,15 @@
+<div>
+  <div class="widgets-container">
+    <% widgets.each do |widget| %>
+      <div class='widget' style="background-color: <%= widget.background_color %>;">
+        <h3><%= widget.title %></h3>
+        <p class='content'> <%= widget.content %></p>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<script>
+
+</script>
+

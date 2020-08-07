@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_05_121846) do
+ActiveRecord::Schema.define(version: 2020_08_07_130627) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,9 +36,11 @@ ActiveRecord::Schema.define(version: 2020_08_05_121846) do
     t.string "background_color"
     t.string "title"
     t.string "content"
+    t.integer "position"
     t.bigint "site_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["position", "site_id"], name: "index_widgets_on_position_and_site_id", unique: true
     t.index ["site_id"], name: "index_widgets_on_site_id"
   end
 

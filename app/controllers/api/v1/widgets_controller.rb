@@ -1,0 +1,38 @@
+module Api
+  module V1
+    class WidgetsController < ApplicationController
+      before_action :set_widget
+
+      def update
+        begin
+            @widget.update!(widget_params.except :position)
+            render json: @widget, status: :ok
+        rescue => e
+          render json: {error: e.as_json}, status: :unprocessable_entity
+        end
+      end
+
+      def destroy
+        @widget.destroy
+      end
+
+      private
+
+      def widget_params
+        params.require(:widget)
+              .permit(%i[ title
+                          content
+                          background_color
+                          position])
+      end
+
+      def update_position?
+        @widget.position != widget_params[:position]
+      end
+
+      def set_widget
+        @widget = Widget.find(params[:id])
+      end
+    end
+  end
+end

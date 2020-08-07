@@ -4,6 +4,7 @@ class CreateWidgets < ActiveRecord::Migration[6.0]
       t.string :background_color
       t.string :title
       t.string :content
+      t.integer :position
       t.references :site, foreign_key: true
 
       t.timestamps

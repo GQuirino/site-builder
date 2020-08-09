@@ -21,6 +21,7 @@ group :test do
   gem 'factory_bot_rails'
   gem 'faker'
   gem 'rspec-rails', '~> 4.0.1'
+  gem 'simplecov', require: false
   gem 'shoulda-matchers'
 end
 

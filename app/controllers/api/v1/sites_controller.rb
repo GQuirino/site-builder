@@ -5,11 +5,18 @@ module Api
 
       def create
         begin
-          @site.save!
+          if @site.save!
+            @site.create_banner!(banner_params)
+            @site.widgets.create!(widget_params)
+          end
           render json: @site, status: :created
         rescue => e
-          render json: {error: e.as_json}, status: :unprocessable_entity
+          render json: { 
+            error: e.record.errors.full_messages
+          }, status: :unprocessable_entity
         end
+        
+
       end
 
       def new
@@ -18,13 +25,27 @@ module Api
 
       private
 
+      def banner_params
+        params.require(:banner).permit(%i[
+                                         title_color
+                                         background_color
+                                       ])
+      end
+
+      def widget_params
+        params.permit(widgets: %i[
+                        title
+                        content
+                        background_color
+                        position
+                      ]).require(:widgets)
+      end
+
       def site_params
-        params.require(:site).permit([
-                                       :title,
-                                       :icon,
-                                       :background_color,
-                                       banner_attributes: %i[id title_color background_color],
-                                       widgets_attributes: [:id, :title, :content, :background_color, :position]
+        params.require(:site).permit(%i[
+                                       title
+                                       icon
+                                       background_color
                                      ])
       end
     end

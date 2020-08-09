@@ -40,7 +40,7 @@ ActiveRecord::Schema.define(version: 2020_08_07_130627) do
     t.bigint "site_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["position", "site_id"], name: "index_widgets_on_position_and_site_id", unique: true
+    t.index ["position", "site_id"], name: "index_widgets_on_position_and_site_id"
     t.index ["site_id"], name: "index_widgets_on_site_id"
   end
 

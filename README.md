@@ -1,7 +1,8 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+docker-compose build
+docker-compose run --rm web rake db:create db:setup
+docker-compose up -d web
 
 Things you may want to cover:
 

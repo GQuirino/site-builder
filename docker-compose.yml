@@ -1,0 +1,27 @@
+version: '2'
+
+volumes:
+  db-data:
+    external: false
+
+services:
+  site_builder_db:
+    container_name: site_builder_db
+    environment:
+      POSTGRES_USERNAME:
+      POSTGRES_PASSWORD:
+    image: postgres:12.3
+    ports:
+      - "5432:5432"
+
+  web:
+    build: .
+    command: bin/rails server --port 3000 --binding 0.0.0.0
+    ports:
+      - "3000:3000"
+    links:
+      - site_builder_db
+    volumes:
+      - .:/site-builder
+    depends_on:
+      - site_builder_db

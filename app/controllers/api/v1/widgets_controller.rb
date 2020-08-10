@@ -4,16 +4,15 @@ module Api
       before_action :set_widget
 
       def update
-        begin
-            @widget.update!(widget_params.except :position)
-            UpdateWidgetsPositionService.new(@widget.site, @widget, widget_params[:position]).perform if update_position?
-            render json: @widget, status: :ok
-        rescue => e
-          render json: {error: e.as_json}, status: :unprocessable_entity
-        end
+        @widget.update!(widget_params.except(:position))
+        UpdateWidgetsPositionService.new(@widget.site, @widget, widget_params[:position]).perform if update_position?
+
+        render json: @widget, status: :ok
+      rescue StandardError => e
+        render json: { error: e.as_json }, status: :unprocessable_entity
       end
 
-      def destroy
+      def delete
         @widget.destroy
         render status: :ok
       end

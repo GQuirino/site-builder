@@ -24,7 +24,7 @@ class UpdateWidgetsPositionService
     update_positions(next_widget, increase_or_decrease(position))
   end
 
-  def increase_or_decrease(p)   
+  def increase_or_decrease(p)
     @position_from > @position_to ? p + 1 : p - 1
   end
 end

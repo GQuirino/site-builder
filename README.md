@@ -2,14 +2,22 @@
 
 # Setup
 
+1. Setup .env file
+```cmd
+cp .env.example .env
+```
 
+2. Build Image
 ```cmd
 docker-compose build
 ```
 
+3. Setup Database
 ```cmd
-docker-compose run --rm web rake db:create db:setup
+docker-compose run --rm web rake db:create db:setup db:seed
 ```
+
+4. Run
 
 ```cmd
 docker-compose up -d web
@@ -118,8 +126,7 @@ docker-compose run --rm web rake site:generate_pages
   ```
 
 `DELETE /api/v1/banners/:id`
-  - Deletes Banner\
-
+  - Deletes Banner
 
 ## Widgets
 

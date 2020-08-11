@@ -7,7 +7,8 @@ module Api
     describe WidgetsController, type: :controller do
       describe 'PUT #update' do
         let(:update_postition_service){ double(:update_postition_service) }
-        let!(:widget) { create(:widget) }
+        let!(:site){ create(:site) }
+        let!(:widget) { create(:widget, position: 1, site: site) }
         let(:widget_attributes) do
           {
             title: 'New_widget_title_color',
@@ -25,7 +26,6 @@ module Api
         before do
           allow(UpdateWidgetsPositionService).to receive(:new).and_return(update_postition_service)
           allow(update_postition_service).to receive(:perform)
-          subject
         end
 
         subject { put :update, params: params }
@@ -38,6 +38,7 @@ module Api
           it { is_expected.to have_http_status(:ok) }
 
           it 'assigns @site' do
+            subject
             expect(assigns(:widget)).to eql(widget)
           end
 
@@ -48,6 +49,15 @@ module Api
             end.to change { widget.title }.from(widget.title).to(widget_attributes[:title])
               .and change { widget.content }.from(widget.content).to(widget_attributes[:content])
               .and change { widget.background_color }.from(widget.background_color).to(widget_attributes[:background_color])
+          end
+
+          it 'update site code_rendered' do
+            site.update(code_rendered: true)
+
+            expect do
+              subject
+              site.reload
+            end.to change { site.code_rendered }.from(true).to(false)
           end
         end
 
@@ -63,10 +73,10 @@ module Api
 
           before do
             allow(controller).to receive(:update_position?).and_return(true)
-            subject
           end
 
           it 'calls UpdateWidgetsPositionService' do
+            subject
             expect(UpdateWidgetsPositionService).to have_received(:new).with(widget.site, widget.reload, widget_attributes[:position])
           end
         end

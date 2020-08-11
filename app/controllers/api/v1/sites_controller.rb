@@ -14,7 +14,7 @@ module Api
       end
 
       def update
-        @site.update!(site_params)
+        @site.update!(site_params.merge(code_rendered: false))
         render json: @site, status: :ok
       rescue => e
         render json: {

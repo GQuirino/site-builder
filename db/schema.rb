@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_07_130627) do
+ActiveRecord::Schema.define(version: 2020_08_11_113904) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,10 +24,19 @@ ActiveRecord::Schema.define(version: 2020_08_07_130627) do
     t.index ["site_id"], name: "index_banners_on_site_id"
   end
 
+  create_table "page_codes", force: :cascade do |t|
+    t.text "html"
+    t.bigint "site_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["site_id"], name: "index_page_codes_on_site_id"
+  end
+
   create_table "sites", force: :cascade do |t|
     t.string "icon"
     t.string "background_color"
     t.string "title"
+    t.boolean "code_rendered", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -45,5 +54,6 @@ ActiveRecord::Schema.define(version: 2020_08_07_130627) do
   end
 
   add_foreign_key "banners", "sites"
+  add_foreign_key "page_codes", "sites"
   add_foreign_key "widgets", "sites"
 end

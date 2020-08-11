@@ -39,6 +39,11 @@ module Api
           it 'creates widget' do
             expect { subject }.to change(Widget, :count).by(1)
           end
+
+          it 'sets code_rendered to false' do
+            subject
+            expect(Site.last.code_rendered).to be_falsey
+          end
         end
 
         context 'with invalid attributes' do
@@ -65,7 +70,7 @@ module Api
       end
 
       describe 'PUT #update' do
-        let(:site) { create(:site) }
+        let(:site) { create(:site, code_rendered: true) }
         let!(:banner) { create(:banner, site: site) }
         let!(:widget) { create(:widget, site: site, position: 1) }
         let(:site_attributes) do
@@ -137,6 +142,12 @@ module Api
             end.to change { widget.title }.from(widget.title).to(widgets_attributes.first[:title])
               .and change { widget.content }.from(widget.content).to(widgets_attributes.first[:content])
               .and change { widget.background_color }.from(widget.background_color).to(widgets_attributes.first[:background_color])
+          end
+
+          it 'sets code_rendered to false' do
+            subject
+            site.reload
+            expect(site.code_rendered).to be_falsey
           end
         end
 

@@ -17,7 +17,7 @@ class UpdateWidgetsPositionService
     return if widget.position == position
 
     widget.position = position
-    widget.save
+    widget.save(validate: false)
 
     return unless next_widget
 

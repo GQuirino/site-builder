@@ -3,6 +3,7 @@ FactoryBot.define do
     title { Faker::Name }
     icon { Faker::Internet.url }
     background_color { Faker::Color.hex_color }
+    code_rendered { [true, false].sample }
 
     trait :with_banner do
       after(:stub) do |site|

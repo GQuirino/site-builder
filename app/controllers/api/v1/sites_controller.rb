@@ -27,6 +27,10 @@ module Api
         render status: :ok
       end
 
+      def index
+        render json: Site.all, status: :ok
+      end
+
       private
 
       def set_site

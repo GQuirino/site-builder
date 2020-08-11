@@ -12,7 +12,7 @@ module Api
         render json: { error: e.as_json }, status: :unprocessable_entity
       end
 
-      def delete
+      def destroy
         @widget.destroy
         render status: :ok
       end

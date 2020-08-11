@@ -5,4 +5,8 @@ class Site < ApplicationRecord
 
   accepts_nested_attributes_for :widgets
   accepts_nested_attributes_for :banner
+
+  def page
+    page_codes.order(updated_at: :desc).first
+  end
 end

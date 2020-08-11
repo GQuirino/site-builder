@@ -2,7 +2,7 @@ module Api
   module V1
     class SitesController < ApplicationController
       before_action :new, only: [:create]
-      before_action :set_site, only: [:update, :destroy]
+      before_action :set_site, only: [:update, :destroy, :page]
 
       def create
         @site.save!
@@ -31,6 +31,14 @@ module Api
         render json: Site.all, status: :ok
       end
 
+      def page
+        if @site.page
+          render json: @site.page, status: :ok
+        else
+          render json: { error: ['Page not rendered'] } , status: :unprocessable_entity
+        end
+      end
+  
       private
 
       def set_site

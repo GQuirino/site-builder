@@ -215,6 +215,36 @@ module Api
           expect(JSON.parse(subject.body)).to eql(JSON.parse(expected))
         end        
       end
+
+      describe 'GET sites#page' do
+        let(:site) { create(:site) }
+    
+        subject { get :page, params: { id: site.id } }
+
+        context 'with page rendered' do
+          let!(:page_code) { create(:page_code, site: site) }
+
+          it { is_expected.to have_http_status(:ok) }
+
+          it 'render html' do
+            subject
+            expected = { "html" => page_code.html }
+  
+            expect(ActiveSupport::JSON.decode(response.body)).to eql(expected)
+          end
+        end
+
+        context 'without page rendered' do
+          it { is_expected.to have_http_status(:unprocessable_entity) }
+
+          it 'render html' do
+            subject
+            expected = { "error" => ['Page not rendered']}
+  
+            expect(JSON.parse(response.body)).to eql(expected)
+          end
+        end
+      end
     end
   end
 end
